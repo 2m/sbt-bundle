@@ -1,4 +1,5 @@
 import scalariform.formatter.preferences._
+import bintray.Keys._
 
 sbtPlugin := true
 
@@ -27,11 +28,10 @@ releaseSettings
 ReleaseKeys.versionBump := sbtrelease.Version.Bump.Minor
 
 publishMavenStyle := false
-publishTo := {
-  if (isSnapshot.value) Some(Classpaths.sbtPluginSnapshots)
-  else Some(Classpaths.sbtPluginReleases)
-}
+bintrayPublishSettings
+repository in bintray := "sbt-plugins"
+bintrayOrganization in bintray := None
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 scriptedSettings
 scriptedLaunchOpts <+= version apply { v => s"-Dproject.version=$v" }
-
